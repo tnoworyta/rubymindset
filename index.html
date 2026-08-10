@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Ruby Mindset Tomasz Noworyta — usługi programistyczne Full Stack. Ruby on Rails, Node.js, React, integracje API i rozwój aplikacji webowych."
+  />
+  <title>Ruby Mindset Tomasz Noworyta | Full Stack Development</title>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121a2f;
+      --card: rgba(255, 255, 255, 0.055);
+      --text: #f5f7fb;
+      --muted: #aeb8cc;
+      --line: rgba(255, 255, 255, 0.11);
+      --accent: #ef4444;
+      --accent-soft: rgba(239, 68, 68, 0.14);
+      --max-width: 1120px;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(239, 68, 68, 0.12), transparent 30%),
+        linear-gradient(180deg, #0b1020 0%, #0b1020 70%, #0f1628 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 16, 32, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1.05rem;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      padding: 110px 0 90px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fecaca;
+      background: var(--accent-soft);
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+      max-width: 900px;
+    }
+
+    h1 .accent {
+      color: var(--accent);
+    }
+
+    .hero p {
+      margin: 28px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      font-weight: 750;
+      transition: 0.2s ease;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+
+    .button-secondary {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .button-secondary:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .code-card {
+      border: 1px solid var(--line);
+      background: rgba(9, 14, 28, 0.75);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .code-top {
+      display: flex;
+      gap: 7px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+    }
+
+    .code {
+      padding: 24px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      overflow-x: auto;
+    }
+
+    .code .red { color: #f87171; }
+    .code .blue { color: #93c5fd; }
+    .code .green { color: #86efac; }
+    .code .muted { color: #64748b; }
+
+    section {
+      padding: 92px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin-bottom: 42px;
+    }
+
+    .section-heading small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin-top: 16px;
+      font-size: 1.05rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+    }
+
+    .card-number {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 34px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tech {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #dbe4f3;
+      background: rgba(255, 255, 255, 0.035);
+      font-weight: 650;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 56px;
+    }
+
+    .about-kicker {
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .about-copy {
+      font-size: 1.14rem;
+      color: var(--muted);
+    }
+
+    .about-copy strong {
+      color: var(--text);
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .fact {
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .fact span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .contact-box {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 48px;
+      background:
+        linear-gradient(145deg, rgba(239, 68, 68, 0.11), rgba(255,255,255,0.03));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      margin: 14px 0 0;
+      max-width: 650px;
+    }
+
+    footer {
+      padding: 36px 0 44px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 90px;
+      }
+
+      .code-card {
+        max-width: 600px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+
+      .facts {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 32px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      nav {
+        min-height: 64px;
+      }
+
+      .brand {
+        max-width: 180px;
+      }
+
+      .hero {
+        padding-top: 70px;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="brand" href="#top">Ruby <span>Mindset</span></a>
+
+        <div class="nav-links">
+          <a href="#uslugi">Usługi</a>
+          <a href="#technologie">Technologie</a>
+          <a href="#o-mnie">O mnie</a>
+          <a class="nav-cta" href="#kontakt">Kontakt</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Full Stack Development</div>
+
+          <h1>
+            Buduję software, który
+            <span class="accent">rośnie razem z biznesem.</span>
+          </h1>
+
+          <p>
+            Pomagam firmom tworzyć, rozwijać i modernizować aplikacje webowe.
+            Specjalizuję się w Ruby on Rails i Node.js — od architektury backendu,
+            przez integracje, po nowoczesny frontend.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#kontakt">Porozmawiajmy o projekcie</a>
+            <a class="button button-secondary" href="#uslugi">Zobacz usługi</a>
+          </div>
+        </div>
+
+        <div class="code-card" aria-label="Przykładowy kod">
+          <div class="code-top">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+
+          <div class="code">
+<pre><span class="red">class</span> <span class="blue">RubyMindset</span>
+  <span class="red">def</span> build
+    {
+      <span class="green">backend:</span> <span class="green">"Ruby on Rails / Node.js"</span>,
+      <span class="green">frontend:</span> <span class="green">"React"</span>,
+      <span class="green">database:</span> <span class="green">"PostgreSQL"</span>,
+      <span class="green">approach:</span> <span class="green">"simple & reliable"</span>
+    }
+  <span class="red">end</span>
+<span class="red">end</span>
+
+<span class="muted"># clean code. clear communication.</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="uslugi">
+      <div class="container">
+        <div class="section-heading">
+          <small>Usługi</small>
+          <h2>Wsparcie techniczne na każdym etapie projektu</h2>
+          <p>
+            Od pierwszej wersji produktu po rozwój i modernizację systemów,
+            które działają już od lat.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-number">01</div>
+            <h3>Tworzenie aplikacji webowych</h3>
+            <p>
+              Projektowanie i rozwój aplikacji dopasowanych do potrzeb biznesowych —
+              od MVP po rozbudowane systemy.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">02</div>
+            <h3>Rozwój istniejących projektów</h3>
+            <p>
+              Rozbudowa funkcjonalności, refaktoryzacja, aktualizacje technologii
+              i przejmowanie istniejących aplikacji.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">03</div>
+            <h3>Integracje API i systemów</h3>
+            <p>
+              Integracje z CRM, ERP, systemami płatności, e-commerce,
+              usługami chmurowymi oraz innymi zewnętrznymi API.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">04</div>
+            <h3>Architektura i konsulting</h3>
+            <p>
+              Analiza techniczna, projektowanie architektury, code review
+              oraz wsparcie przy podejmowaniu kluczowych decyzji technologicznych.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="technologie">
+      <div class="container">
+        <div class="section-heading">
+          <small>Technologie</small>
+          <h2>Sprawdzony stack technologiczny</h2>
+          <p>
+            Dobieram technologie do problemu, nie odwrotnie. Najczęściej pracuję
+            z ekosystemem Ruby, JavaScript / TypeScript i PostgreSQL.
+          </p>
+        </div>
+
+        <div class="tech-list">
+          <span class="tech">Ruby on Rails</span>
+          <span class="tech">Ruby</span>
+          <span class="tech">Node.js</span>
+          <span class="tech">TypeScript</span>
+          <span class="tech">React</span>
+          <span class="tech">PostgreSQL</span>
+          <span class="tech">Redis</span>
+          <span class="tech">Docker</span>
+          <span class="tech">AWS</span>
+          <span class="tech">REST API</span>
+          <span class="tech">GraphQL</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="o-mnie">
+      <div class="container about-grid">
+        <div>
+          <div class="about-kicker">Ruby Mindset</div>
+          <h2>Doświadczenie techniczne połączone z biznesowym podejściem</h2>
+        </div>
+
+        <div class="about-copy">
+          <p>
+            <strong>Ruby Mindset Tomasz Noworyta</strong> świadczy usługi
+            programistyczne dla firm rozwijających produkty cyfrowe i systemy webowe.
+          </p>
+
+          <p>
+            Wspieram projekty zarówno jako programista Full Stack, jak i Tech Lead
+            czy konsultant techniczny. Zależy mi na prostych rozwiązaniach,
+            przewidywalnym procesie i kodzie, który można bezpiecznie rozwijać
+            przez kolejne lata.
+          </p>
+
+          <div class="facts">
+            <div class="fact">
+              <strong>Full Stack</strong>
+              <span>Backend i frontend</span>
+            </div>
+
+            <div class="fact">
+              <strong>B2B</strong>
+              <span>Elastyczna współpraca</span>
+            </div>
+
+            <div class="fact">
+              <strong>Remote</strong>
+              <span>Polska i zagranica</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <div class="container">
+        <div class="contact-box">
+          <div>
+            <div class="about-kicker">Kontakt</div>
+            <h2>Masz projekt do zrealizowania?</h2>
+            <p>
+              Napisz kilka zdań o swoim projekcie, problemie technicznym
+              lub planowanej integracji. Chętnie omówię możliwe podejście.
+            </p>
+          </div>
+
+          <!-- ZMIEŃ ADRES EMAIL PONIŻEJ -->
+          <a
+            class="button button-primary"
+            href="mailto:kontakt@rubymindset.pl"
+          >
+            Napisz wiadomość
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        © <span id="year"></span> Ruby Mindset Tomasz Noworyta
+      </div>
+      <div>
+        Full Stack Development · Ruby on Rails · Node.js
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
